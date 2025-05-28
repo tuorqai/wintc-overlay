@@ -35,7 +35,7 @@ DEPEND="shell? (
 		x11-libs/gtk+:3
 		xfce-base/garcon
 		lightdm? ( x11-misc/lightdm )
-		webkit? ( net-libs/webkit-gtk )
+		webkit? ( net-libs/webkit-gtk:4.1 )
 	)"
 
 RDEPEND="${DEPEND}
