@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <use>
+    <flag name="fonts">Include fonts</flag>
+    <flag name="lightdm">Build lightdm themes</flag>
+    <flag name="plymouth">Build plymouth bootsplash</flag>
+    <flag name="shell">Build programs mimicking certain Windows features</flag>
+    <flag name="sounds">Include sound files</flag>
+    <flag name="themes">Build themes (cursors, icons)</flag>
+    <flag name="wallpapers">Include wallpapers</flag>
+    <flag name="webkit">Build Explorer, which requires net-libs/webkit-gtk</flag>
+  </use>
+</pkgmetadata>
