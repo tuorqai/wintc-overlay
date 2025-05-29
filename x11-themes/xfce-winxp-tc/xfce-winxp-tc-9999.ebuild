@@ -120,8 +120,16 @@ src_configure() {
 	use sounds && wintc_targets="${wintc_targets} sounds"
 	use wallpapers && wintc_targets="${wintc_targets} wallpapers"
 
+	einfo "[wintc] The following targets will be built:"
+
 	for target in ${wintc_targets}; do
-		einfo "[wintc] Configuring target: ${target}"
+		einfo "[wintc] -- ${target}"
+	done
+}
+
+src_compile() {
+	for target in ${wintc_targets}; do
+		einfo "[wintc] Building target: ${target}"
 
 		mkdir -p "${S}/build/${target}"
 		cd "${S}/build/${target}"
@@ -136,6 +144,7 @@ src_configure() {
 			-DWINTC_LOCAL_LIBS_ROOT="${S}/build" \
 			"${S}/${target}"
 
+		# <dontread>
 		# Hack: we have to build shared libraries in configure stage
 		# due to CMake's weird behavior.
 		# The thing is, if .so files are not there during the
@@ -145,26 +154,11 @@ src_configure() {
 		#
 		# Fixme: find a way to tell CMake to stop doing what it
 		# shouldn't.
-		case "${target}" in
-			shared*)
-				einfo "[wintc] Pre-building shared library: ${target}"
-				emake
-			;;
-		esac
-	done
-}
+		# </dontread>
+		#
+		# Added later: as we moved the entire configure+compile
+		# stuff in src_compile, it's not a big deal anymore.
 
-src_compile() {
-	for target in ${wintc_targets}; do
-		case "${target}" in
-			shared*)
-				continue
-			;;
-		esac
-
-		einfo "[wintc] Compiling target: ${target}"
-
-		cd "${S}/build/${target}"
 		emake
 	done
 }
