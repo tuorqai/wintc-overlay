@@ -29,6 +29,7 @@ DEPEND="shell? (
 		dev-db/sqlite
 		media-libs/libcanberra
 		media-libs/libcanberra-gtk3
+		media-libs/libpulse
 		net-misc/networkmanager
 		sys-power/upower
 		x11-libs/gdk-pixbuf:2
