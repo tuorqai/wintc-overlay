@@ -47,7 +47,7 @@ RDEPEND="${DEPEND}
 BDEPEND="shell? ( sys-devel/gettext )
 	themes? (
 		dev-lang/python
-		dev-ruby/sass
+		|| ( dev-lang/sassc dev-ruby/sass )
 		x11-apps/xcursorgen
 	)
 	virtual/pkgconfig"
