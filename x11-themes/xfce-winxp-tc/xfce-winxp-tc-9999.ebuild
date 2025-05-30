@@ -57,7 +57,7 @@ BDEPEND="shell? ( sys-devel/gettext )
 RESTRICT="network-sandbox"
 
 # This list is sorted according to dependencies.
-wintc_shlibs="shared/comgtk
+shlibs=( shared/comgtk
 	shared/shcommon
 	shared/shlang
 	shared/comctl
@@ -68,9 +68,9 @@ wintc_shlibs="shared/comgtk
 	shared/shell
 	shared/shelldpa
 	shared/sndapi
-	shared/syscfg"
+	shared/syscfg )
 
-wintc_targets=""
+declare -a targets
 
 src_prepare() {
 	mkdir -p "${S}/shell/cpl/sysdm/res/raw"
@@ -80,8 +80,8 @@ src_prepare() {
 
 src_configure() {
 	if use shell ; then
-		wintc_targets="base/bldtag
-			${wintc_shlibs}
+		targets+=( base/bldtag
+			${shlibs[@]}
 			base/regsvc
 			shell/cpl/desk
 			shell/cpl/printers
@@ -92,21 +92,18 @@ src_configure() {
 			shell/taskband
 			shell/winver
 			windows/notepad
-			windows/taskmgr"
+			windows/taskmgr )
 
 		if use lightdm ; then
-			wintc_targets="${wintc_targets}
-				shared/msgina
-				base/logonui"
+			targets+=( shared/msgina base/logonui )
 		fi
 
-		use plymouth && wintc_targets="${wintc_targets} base/bootvid"
-		use webkit && wintc_targets="${wintc_targets} shell/explorer"
+		use plymouth && targets+=( base/bootvid )
+		use webkit && targets+=( shell/explorer )
 	fi
 
 	if use themes ; then
-		wintc_targets="${wintc_targets}
-			cursors/no-shadow/standard
+		targets+=( cursors/no-shadow/standard
 			cursors/with-shadow/standard
 			icons/luna
 			themes/native
@@ -114,22 +111,22 @@ src_configure() {
 			themes/luna/blue
 			themes/luna/homestead
 			themes/luna/metallic
-			themes/zune"
+			themes/zune )
 	fi
 
-	use fonts && wintc_targets="${wintc_targets} fonts"
-	use sounds && wintc_targets="${wintc_targets} sounds"
-	use wallpapers && wintc_targets="${wintc_targets} wallpapers"
+	use fonts && targets+=( fonts )
+	use sounds && targets+=( sounds )
+	use wallpapers && targets+=( wallpapers )
 
 	einfo "[wintc] The following targets will be built:"
 
-	for target in ${wintc_targets}; do
+	for target in ${targets[@]}; do
 		einfo "[wintc] -- ${target}"
 	done
 }
 
 src_compile() {
-	for target in ${wintc_targets}; do
+	for target in ${targets[@]}; do
 		einfo "[wintc] Building target: ${target}"
 
 		mkdir -p "${S}/build/${target}"
@@ -165,7 +162,7 @@ src_compile() {
 }
 
 src_install() {
-	for target in ${wintc_targets}; do
+	for target in ${targets[@]}; do
 		einfo "[wintc] Installing target: ${target}"
 
 		cd "${S}/build/${target}"
