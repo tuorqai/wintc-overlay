@@ -133,13 +133,15 @@ src_compile() {
 		cd "${S}/build/${target}"
 
 		cmake -DBUILD_SHARED_LIBS=ON \
-			-DCMAKE_BUILD_TYPE="Release" \
-			-DCMAKE_INSTALL_PREFIX="/usr" \
+			-DCMAKE_BUILD_TYPE="RelWithDebInfo" \
+			-DCMAKE_INSTALL_PREFIX="${EPREFIX}/usr" \
 			-DWINTC_SKU="xpclient-pro" \
 			-DWINTC_PKGMGR="raw" \
 			-DWINTC_PKGMGR_EXT="std" \
 			-DWINTC_USE_LOCAL_LIBS="1" \
 			-DWINTC_LOCAL_LIBS_ROOT="${S}/build" \
+			--no-warn-unused-cli \
+			-G "Unix Makefiles" \
 			"${S}/${target}"
 
 		# <dontread>
