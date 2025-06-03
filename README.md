@@ -3,6 +3,16 @@ wintc-overlay
 
 This repository contains Gentoo ebuilds for [rozniak/xfce-winxp-tc](https://github.com/rozniak/xfce-winxp-tc.git).
 
+## Disclaimer
+
+The ebuild has lots of issues, considering that the upstream project is still
+under development. In particular, the icon theme has lots of broken
+symlinks (will be shown as QA notices).
+
+Another issue is licensing. Despite the ebuild having `LICENSE="GPL-2.0"`, the
+upstream project obviously borrows some non-free assets from Microsoft.
+Keep that in mind.
+
 ## Configuration
 
 Create `/etc/portage/repos.conf/wintc-overlay.conf` with the following content:
@@ -46,8 +56,3 @@ Installation is as simple as:
 ```
 emerge --ask x11-themes/xfce-winxp-tc
 ```
-
-## Disclaimer
-
-The ebuild is not optimal and has lots of issues. In particular, shared libraries
-are compiled during the configuration stage, among other things.
