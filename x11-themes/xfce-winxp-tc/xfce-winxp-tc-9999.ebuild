@@ -23,6 +23,7 @@ SLOT="0"
 
 KEYWORDS="~amd64"
 IUSE="lightdm plymouth webkit +shell +themes +fonts +sounds +wallpapers"
+REQUIRED_USE="!shell? ( !lightdm !webkit )"
 
 DEPEND="shell? (
 		dev-libs/glib:2
@@ -104,7 +105,6 @@ src_configure() {
 			targets+=( shared/msgina base/logonui )
 		fi
 
-		use plymouth && targets+=( base/bootvid )
 		use webkit && targets+=( shell/explorer )
 	fi
 
@@ -120,6 +120,7 @@ src_configure() {
 			themes/zune )
 	fi
 
+	use plymouth && targets+=( base/bootvid )
 	use fonts && targets+=( fonts )
 	use sounds && targets+=( sounds )
 	use wallpapers && targets+=( wallpapers )
