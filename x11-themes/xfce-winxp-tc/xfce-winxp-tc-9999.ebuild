@@ -8,7 +8,9 @@
 
 EAPI=8
 
-inherit git-r3
+PYTHON_COMPAT=( python3_{11..13} )
+
+inherit git-r3 python-any-r1
 
 DESCRIPTION="Windows XP Total Conversion for Xfce"
 HOMEPAGE="https://github.com/rozniak/xfce-winxp-tc"
@@ -47,7 +49,7 @@ RDEPEND="${DEPEND}
 
 BDEPEND="shell? ( sys-devel/gettext )
 	themes? (
-		dev-lang/python
+		${PYTHON_DEPS}
 		|| ( dev-lang/sassc dev-ruby/sass )
 		x11-apps/xcursorgen
 	)
@@ -71,6 +73,10 @@ shlibs=( shared/comgtk
 	shared/syscfg )
 
 declare -a targets
+
+pkg_setup() {
+	use themes && python-any-r1_pkg_setup
+}
 
 src_prepare() {
 	mkdir -p "${S}/shell/cpl/sysdm/res/raw"
@@ -142,7 +148,7 @@ src_compile() {
 			-DWINTC_LOCAL_LIBS_ROOT="${S}/build" \
 			--no-warn-unused-cli \
 			-G "Unix Makefiles" \
-			"${S}/${target}"
+			"${S}/${target}" || die
 
 		# <dontread>
 		# Hack: we have to build shared libraries in configure stage
@@ -159,7 +165,7 @@ src_compile() {
 		# Added later: as we moved the entire configure+compile
 		# stuff in src_compile, it's not a big deal anymore.
 
-		emake
+		emake VERBOSE=1
 	done
 }
 

@@ -11,4 +11,7 @@
     <flag name="wallpapers">Include wallpapers</flag>
     <flag name="webkit">Build Explorer, which requires net-libs/webkit-gtk</flag>
   </use>
+  <upstream>
+    <remote-id type="github">rozniak/xfce-winxp-tc</remote-id>
+  </upstream>
 </pkgmetadata>
