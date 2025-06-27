@@ -102,7 +102,7 @@ src_configure() {
 			windows/taskmgr )
 
 		if use lightdm ; then
-			targets+=( shared/msgina base/logonui )
+			targets+=( shared/msgina base/logonui shell/exitwin )
 		fi
 
 		use webkit && targets+=( shell/explorer )
